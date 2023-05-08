@@ -5,7 +5,7 @@ info:
   description: Dokumentasi API Challenge 5
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/TANTRIFADHILLAHASRI/Challenge5/1.0.0
+- url: https://virtserver.swaggerhub.com/tantrifadh/Challenge5/1.0.0
   description: SwaggerHub API Auto Mocking
 paths: {}
 components: {}
