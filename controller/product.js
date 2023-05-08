@@ -1,16 +1,16 @@
-const { json } = require('sequelize');
-const {Product} = require('../models');
+const {Product} = require('../models')
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const product = await Product.findAll();
+            const products = await Product.findAll();
 
             return res.status(200).json({
                 status: true,
-                massage: 'success',
-                data: product
-            });
+                message: 'success',
+                data: products
+            }) 
+
         } catch (error) {
             next(error);
         }
@@ -18,22 +18,24 @@ module.exports = {
 
     show: async (req, res, next) => {
         try {
-            const{product_id} = req.params;
-            const product = await Product.findOne({where: {id:product_id}});
+            const {product_id} = req.params;
 
-            if(!product) {
+            const product = await Product.findOne({where: {id: product_id}});
+
+            if (!product) {
                 return res.status(404).json({
                     status: false,
-                    massage: `can't find product id ${product_id}`,
+                    message: `can't find product with id ${product_id}!`,
                     data: null
                 });
             }
 
-            return res.status(201).json({
+            return res.status(200).json({
                 status: true,
-                massage: 'success',
-                data: null
+                message: 'success',
+                data: product
             });
+
         } catch (error) {
             next(error);
         }
@@ -42,17 +44,19 @@ module.exports = {
     store: async (req, res, next) => {
         try {
             const {name, quantity} = req.body;
+
             const product = await Product.create({
                 name: name,
                 quantity: quantity
             });
+
             console.log(product);
 
             return res.status(201).json({
                 status: true,
-                massage: 'success',
-                data: null
-            });
+                message:'success',
+                data: product
+            })
         } catch (error) {
             next(error);
         }
@@ -61,19 +65,20 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const {product_id} = req.params;
-            const updated = await Product.update(req.body, {where: {id:product_id}});
 
-            if(!updated[0] == [0]) {
+            const updated = await Product.update(req.body, {where: {id: product_id}});
+
+            if (updated[0] == 0) {
                 return res.status(404).json({
                     status: false,
-                    massage: `can't find product id ${product_id}`,
+                    message: `can't find product with id ${product_id}!`,
                     data: null
                 });
             }
 
             return res.status(201).json({
                 status: true,
-                massage: 'success',
+                message: 'success',
                 data: null
             });
         } catch (error) {
@@ -84,19 +89,20 @@ module.exports = {
     destroy: async (req, res, next) => {
         try {
             const {product_id} = req.params;
-            const deleted = await Product.destroy({where: {id:product_id}});
 
-            if(!deleted) {
+            const deleted = await Product.destroy({where: {id: product_id}});
+
+            if (!deleted) {
                 return res.status(404).json({
                     status: false,
-                    massage: `can't find product id ${product_id}`,
+                    message: `can't find product with id ${product_id}!`,
                     data: null
                 });
             }
 
-            return res.status(201).json({
+            return res.status(200).json({
                 status: true,
-                massage: 'success',
+                message: 'success',
                 data: null
             });
         } catch (error) {
