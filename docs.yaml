@@ -1,87 +1,27 @@
+---
 openapi: 3.0.0
 info:
-  version: 1.0.0
   title: Challenge5
   description: Dokumentasi API Challenge 5
+  version: 1.0.0
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/tantrifadh/Challenge5/1.0.0
-  - description: Base URL
-    url: http://localhost:3000
-tags: 
-  - name: Component
-    description: Data Component
-  - name: Product
-    description: Data Product
-  - name: Supplier
-    description: Data Supplier
+- url: https://virtserver.swaggerhub.com/tantrifadh/Challenge5/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:3000
+  description: Base URL
+tags:
+- name: Component
+  description: Data Component
+- name: Product
+  description: Data Product
+- name: Supplier
+  description: Data Supplier
 paths:
   /components:
-    post:
-      tags:
-        - Component
-      summary: Menambahkan data component
-      description: Menambahkan data component (desc)
-      operationId: post-component
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Strach
-                description:
-                  type: string
-                  example: This is strach
-      responses:
-        "201":
-          description: Create Component Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      name:
-                        type: string
-                        example: Strach
-                      description:
-                        type: string
-                        example: This is strach
-        "400":
-          description: Error from user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: false
-                  message:
-                    type: string
-                    example: Component Name and Description is required!
-                  data:
-                    type: object
-                    example: null
     get:
       tags:
-        - Component
-      summary : Menampilkan semua data component
+      - Component
+      summary: Menampilkan semua data component
       description: Menampilkan semua data component (desc)
       operationId: get-all-component
       responses:
@@ -90,169 +30,128 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: Strach
-                        description:
-                          type: string
-                          example: This is strach
-                        componet_suppliers:
-                          $ref: "#/components/schemas/Component_supplier"
+                $ref: '#/components/schemas/inline_response_200'
+    post:
+      tags:
+      - Component
+      summary: Menambahkan data component
+      description: Menambahkan data component (desc)
+      operationId: post-component
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/components_body'
+      responses:
+        "201":
+          description: Create Component Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
   /components/{id}:
     get:
       tags:
-        - Component
+      - Component
       summary: Menampilkan data component berdasarkan ID
       description: Menampilkan data component berdasarkan ID (desc)
       operationId: get-component-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari component yang ingin ditampilkan
-          required: true
-          schema:
-            type: integer
-            example: 1
+      - name: id
+        in: path
+        description: ID dari component yang ingin ditampilkan
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
       responses:
         "200":
           description: Show Component by ID Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      name:
-                        type: string
-                        example: Strach
-                      description:
-                        type: string
-                        example: This is strach
-                      componet_suppliers:
-                        $ref: "#/components/schemas/Component_supplier"
+                $ref: '#/components/schemas/inline_response_200_1'
         "404":
           description: Component not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Component_404"
+                $ref: '#/components/schemas/Component_404'
     put:
       tags:
-        - Component
+      - Component
       summary: Memperbarui data component berdasarkan ID
       description: Memperbarui data component berdasarkan ID (desc)
       operationId: update-component-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari component yang ingin diperbarui
-          required: true
-          schema:
-            type: integer
-            example: 1
+      - name: id
+        in: path
+        description: ID dari component yang ingin diperbarui
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Tapioka Strach
-                description:
-                  type: string
-                  example: This is tapioka strach
+              $ref: '#/components/schemas/components_id_body'
       responses:
         "200":
           description: Update Component Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_2'
         "404":
           description: Component not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Component_404"
+                $ref: '#/components/schemas/Component_404'
     delete:
       tags:
-        - Component
+      - Component
       summary: Menghapus data component berdasarkan ID
       description: Menghapus data component berdasarkan ID (desc)
       operationId: delete-component-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari component yang ingin dihapus
-          required: true
-          schema:
-            type: integer
-            example: 1
+      - name: id
+        in: path
+        description: ID dari component yang ingin dihapus
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
       responses:
         "200":
           description: Delete Component Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_3'
         "404":
           description: Component not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Component_404"
+                $ref: '#/components/schemas/Component_404'
   /components/component-suppliers/:
     post:
       tags:
-        - Component
+      - Component
       summary: Menambahkan supplier pada component berdasarkan ID
       description: Menambahkan supplier pada component berdasarkan ID (desc)
       operationId: post-supplier-components
@@ -260,146 +159,35 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                supplier_id:
-                  type: integer
-                  example: 1
-                component_id:
-                  type: integer
-                  example: 1
+              $ref: '#/components/schemas/components_componentsuppliers_body'
       responses:
         "201":
           description: Add Component-Supplier Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      supplier_id:
-                        type: integer
-                        example: 1
-                      component_id:
-                        type: integer
-                        example: 2
+                $ref: '#/components/schemas/inline_response_201_1'
         "404":
           description: Error not found
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: "#/components/schemas/Component_404"
-                  - $ref: "#/components/schemas/Supplier_404"
+                $ref: '#/components/schemas/inline_response_404'
               examples:
                 component-not-found:
                   summary: ID Component not found
                   value:
                     status: false
                     message: Component not found!
-                    data: null
                 supplier-not-found:
                   summary: ID Supplier not found
                   value:
                     status: false
                     message: Supplier not found!
-                    data: null
   /products:
-    post:
-      tags:
-        - Product
-      summary: Menambahkan data product
-      description: Menambahkan data product (desc)
-      operationId: post-product
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Tapioka strach
-                quantity:
-                  type: integer
-                  example: 1
-                component_id:
-                  type: integer
-                  example: 1
-      responses:
-        "201":
-          description: Create Product Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    properties:
-                      product:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          name:
-                            type: string
-                            example: Tapioka strach
-                          quantity:
-                            type: integer
-                            example: 1
-                          component_id:
-                            type: integer
-                            example: 1
-                      product_components:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          product_id:
-                            type: integer
-                            example: 2
-                          component_id:
-                            type: integer
-                            example: 1
-        "400":
-          description: Error from user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: false
-                  message:
-                    type: string
-                    example: Product Name, quantity, and component_id is required!
-                  data:
-                    type: object
-                    example: null
     get:
       tags:
-        - Product
+      - Product
       summary: Menampilkan semua data product
       description: Menampilkan semua data product (desc)
       operationId: get-all-products
@@ -409,204 +197,132 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Product"
+                $ref: '#/components/schemas/inline_response_200_4'
+    post:
+      tags:
+      - Product
+      summary: Menambahkan data product
+      description: Menambahkan data product (desc)
+      operationId: post-product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/products_body'
+      responses:
+        "201":
+          description: Create Product Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
   /products/{id}:
     get:
       tags:
-        - Product
+      - Product
       summary: Menampilkan data product berdasarkan ID yang diberikan
       description: Menampilkan data product berdasarkan ID yang diberikan (desc)
       operationId: get-product-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari product yang ingin ditampilkan.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari product yang ingin ditampilkan.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       responses:
         "200":
           description: Show Product by ID Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Product"
+                $ref: '#/components/schemas/inline_response_200_4'
         "404":
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product_404"
+                $ref: '#/components/schemas/Product_404'
     put:
       tags:
-        - Product
+      - Product
       summary: Memperbarui data product berdasarkan ID yang diberikan
       description: Memperbarui data product berdasarkan ID yang diberikan (desc)
       operationId: update-product-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari product yang ingin diperbarui.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari product yang ingin diperbarui.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Corn Strach
-                quantity:
-                  type: integer
-                  example: 2
-                component_id:
-                  type: integer
-                  example: 1
+              $ref: '#/components/schemas/products_id_body'
       responses:
         "200":
           description: Update Product Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_3'
         "404":
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product_404"
+                $ref: '#/components/schemas/Product_404'
     delete:
       tags:
-        - Product
+      - Product
       summary: Menghapus data component berdasarkan ID
       description: Menghapus data product berdasarkan ID (desc)
       operationId: delete-product-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari product yang ingin dihapus.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari product yang ingin dihapus.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       responses:
         "200":
           description: Delete Product Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_3'
         "404":
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product_404"
+                $ref: '#/components/schemas/Product_404'
   /suppliers:
-    post:
-      tags:
-        - Supplier
-      summary: Menambahkan data supplier
-      description: Menambahkan data supplier (desc)
-      operationId: post-supplier
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Bogasari
-                address:
-                  type: string
-                  example: Jakarta
-      responses:
-        "201":
-          description: Create Supplier Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    $ref: "#/components/schemas/Supplier"
-        "400":
-          description: Error from user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: false
-                  message:
-                    type: string
-                    example: Supplier Name and Address is required!
-                  data:
-                    type: object
-                    example: null
     get:
       tags:
-        - Supplier
-      summary: Menampilkan semua data supplier 
+      - Supplier
+      summary: Menampilkan semua data supplier
       description: Menampilkan semua data supplier (desc)
       operationId: get-all-supplier
       responses:
@@ -615,143 +331,127 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Supplier"
+                $ref: '#/components/schemas/inline_response_200_5'
+    post:
+      tags:
+      - Supplier
+      summary: Menambahkan data supplier
+      description: Menambahkan data supplier (desc)
+      operationId: post-supplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/suppliers_body'
+      responses:
+        "201":
+          description: Create Supplier Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_3'
+        "400":
+          description: Error from user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
   /suppliers/{id}:
     get:
       tags:
-        - Supplier
+      - Supplier
       summary: Menampilkan data supplier berdasarkan ID yang diberikan
       description: Menampilkan data supplier berdasarkan ID yang diberikan.
       operationId: get-supplier-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari supplier yang ingin ditampilkan.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari supplier yang ingin ditampilkan.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       responses:
         "200":
           description: Show Supplier by ID Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                  message:
-                    type: string
-                    example: success
-                  data:
-                    $ref: "#/components/schemas/Supplier"
+                $ref: '#/components/schemas/inline_response_200_6'
         "404":
           description: Supplier not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Supplier_404"
+                $ref: '#/components/schemas/Supplier_404'
     put:
       tags:
-        - Supplier
+      - Supplier
       summary: Memperbarui data supplier berdasarkan ID yang diberikan
       description: Memperbarui data supplier berdasarkan ID yang diberikan (desc)
       operationId: update-supplier-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari supplier yang ingin diperbarui.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari supplier yang ingin diperbarui.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Bogasari
-                address:
-                  type: string
-                  example: Jakarta
+              $ref: '#/components/schemas/suppliers_id_body'
       responses:
         "200":
           description: Update Supplier Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Supplier updated successfully
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_7'
         "404":
           description: Supplier not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Supplier_404"
+                $ref: '#/components/schemas/Supplier_404'
     delete:
       tags:
-        - Supplier
+      - Supplier
       summary: Menghapus data component berdasarkan ID
       description: Menghapus data supplier berdasarkan ID (desc)
       operationId: delete-supplier-by-id
       parameters:
-        - name: id
-          in: path
-          description: ID dari supplier yang ingin dihapus.
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 1
+      - name: id
+        in: path
+        description: ID dari supplier yang ingin dihapus.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          example: 1
       responses:
         "200":
           description: Delete Supplier Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Success
-                  data:
-                    type: object
-                    example: null
+                $ref: '#/components/schemas/inline_response_200_3'
         "404":
           description: Supplier not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Supplier_404"
+                $ref: '#/components/schemas/Supplier_404'
 components:
   schemas:
     Component:
@@ -777,7 +477,6 @@ components:
           example: Component not found!
         data:
           type: object
-          example: null
     Component_supplier:
       type: object
       properties:
@@ -785,7 +484,7 @@ components:
           type: integer
           example: 1
         suppliers:
-          $ref: "#/components/schemas/Supplier"
+          $ref: '#/components/schemas/Supplier'
     Product:
       type: object
       properties:
@@ -801,7 +500,7 @@ components:
         product_components:
           type: array
           items:
-            $ref: "#/components/schemas/Product_component"
+            $ref: '#/components/schemas/Product_component'
     Product_component:
       type: object
       properties:
@@ -809,7 +508,7 @@ components:
           type: integer
           example: 1
         components:
-          $ref: "#/components/schemas/Component"
+          $ref: '#/components/schemas/Component'
     Product_404:
       type: object
       properties:
@@ -821,7 +520,6 @@ components:
           example: Product not found!
         data:
           type: object
-          example: null
     Supplier:
       type: object
       properties:
@@ -845,4 +543,318 @@ components:
           example: Supplier not Found!
         data:
           type: object
-          example: null
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_data'
+    components_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Strach
+        description:
+          type: string
+          example: This is strach
+    inline_response_201:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Success
+        data:
+          $ref: '#/components/schemas/inline_response_201_data'
+    inline_response_400:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Component Name and Description is required!
+        data:
+          type: object
+    inline_response_200_1:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/inline_response_200_data'
+    components_id_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Tapioka Strach
+        description:
+          type: string
+          example: This is tapioka strach
+    inline_response_200_2:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          type: object
+    inline_response_200_3:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Success
+        data:
+          type: object
+    components_componentsuppliers_body:
+      type: object
+      properties:
+        supplier_id:
+          type: integer
+          example: 1
+        component_id:
+          type: integer
+          example: 1
+    inline_response_201_1:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/inline_response_201_1_data'
+    inline_response_404:
+      oneOf:
+      - $ref: '#/components/schemas/Component_404'
+      - $ref: '#/components/schemas/Supplier_404'
+    inline_response_200_4:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    products_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Tapioka strach
+        quantity:
+          type: integer
+          example: 1
+        component_id:
+          type: integer
+          example: 1
+    inline_response_201_2:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Success
+        data:
+          $ref: '#/components/schemas/inline_response_201_2_data'
+    inline_response_400_1:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Product Name, quantity, and component_id is required!"
+        data:
+          type: object
+    products_id_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Corn Strach
+        quantity:
+          type: integer
+          example: 2
+        component_id:
+          type: integer
+          example: 1
+    inline_response_200_5:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supplier'
+    suppliers_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Bogasari
+        address:
+          type: string
+          example: Jakarta
+    inline_response_201_3:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Success
+        data:
+          $ref: '#/components/schemas/Supplier'
+    inline_response_400_2:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Supplier Name and Address is required!
+        data:
+          type: object
+    inline_response_200_6:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/Supplier'
+    suppliers_id_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Bogasari
+        address:
+          type: string
+          example: Jakarta
+    inline_response_200_7:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Supplier updated successfully
+        data:
+          type: object
+    inline_response_200_data:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Strach
+        description:
+          type: string
+          example: This is strach
+        componet_suppliers:
+          $ref: '#/components/schemas/Component_supplier'
+    inline_response_201_data:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Strach
+        description:
+          type: string
+          example: This is strach
+    inline_response_201_1_data:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        supplier_id:
+          type: integer
+          example: 1
+        component_id:
+          type: integer
+          example: 2
+    inline_response_201_2_data_product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Tapioka strach
+        quantity:
+          type: integer
+          example: 1
+        component_id:
+          type: integer
+          example: 1
+    inline_response_201_2_data_product_components:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        product_id:
+          type: integer
+          example: 2
+        component_id:
+          type: integer
+          example: 1
+    inline_response_201_2_data:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/inline_response_201_2_data_product'
+        product_components:
+          $ref: '#/components/schemas/inline_response_201_2_data_product_components'
