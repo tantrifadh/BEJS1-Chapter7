@@ -10,7 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Component_Supplier.belongsTo(models.Suppliers, {
+        foreignKey: 'supplier_id',
+        as: 'suppliers',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      });
+
+      Component_Supplier.belongsTo(models.Components, {
+        foreignKey: 'component_id',
+        as: 'components',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      });
     }
   }
   Component_Supplier.init({

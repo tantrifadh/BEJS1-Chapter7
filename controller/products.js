@@ -1,16 +1,26 @@
-const {Product} = require('../models')
+const {Product, Product_Components, Components} = require('../models')
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const products = await Product.findAll();
-
-            return res.status(200).json({
+            const products = await Product.findAll({
+                attributes: ['id', 'name', 'quantity'],
+                include: [{
+                    model: Product_Components,
+                    as: 'product_components',
+                    attributes: ['id'],
+                    include: [{
+                        model: Components,
+                        as: 'components',
+                        attributes: ['name', 'description']
+                    }]
+                }]
+            });
+            return res. status(200).json({
                 status: true,
                 message: 'success',
                 data: products
             }) 
-
         } catch (error) {
             next(error);
         }
@@ -20,7 +30,20 @@ module.exports = {
         try {
             const {product_id} = req.params;
 
-            const product = await Product.findOne({where: {id: product_id}});
+            const product = await Product.findOne({
+                where: {id: product_id},
+                attributes: ['id', 'name', 'quantity'],
+                include: [{
+                    model: Product_Components,
+                    as: 'product_component',
+                    attributes: ['id'],
+                    include: [{
+                        model: Components,
+                        as: 'components',
+                        attributes: ['name', 'description']
+                    }]
+                }]
+            });
 
             if (!product) {
                 return res.status(404).json({
@@ -43,20 +66,43 @@ module.exports = {
 
     store: async (req, res, next) => {
         try {
-            const {name, quantity} = req.body;
+            const {name, quantity, component_id} = req.body;
+
+            const component = await Components.findOne({where: {id: component_id}});
+            if(!component) {
+                return res.status(404).json({
+                    status: false,
+                    massage: `component id with id ${component} id does not exis`,
+                    data: null
+                })
+            }
+
+            if(!name || !quantity) {
+                return res.status(404).json({
+                    status: false,
+                    massage: 'name product and quantity is required',
+                    data: null
+                });
+            }
 
             const product = await Product.create({
                 name: name,
                 quantity: quantity
             });
 
-            console.log(product);
+            const productComponents = await Product_Components.create({
+                product_id: product.id,
+                component_id: component_id
+            });
 
             return res.status(201).json({
                 status: true,
                 message:'success',
-                data: product
-            })
+                data: {
+                    Product: product,
+                    Product_Components: productComponents
+                }
+            });
         } catch (error) {
             next(error);
         }
