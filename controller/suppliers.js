@@ -11,7 +11,7 @@ module.exports = {
                 message: 'success',
                 data: suppliers
             }) 
-
+ 
         } catch (error) {
             next(error);
         }

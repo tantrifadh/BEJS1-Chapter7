@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'component_suppliers',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-      });
+      }); 
 
       // relasi many-to-many --> Products
       Components.hasMany(models.product_components, {

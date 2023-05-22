@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });
-    }
+    } 
   }
   Supplier.init({
     name: DataTypes.STRING,

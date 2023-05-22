@@ -3,7 +3,7 @@ const {
   DB_USERNAME,
   DB_PASSWORD,
   DB_NAME,
-  DB_HOST,
+  DB_HOST, 
   DB_DIALECT = 'postgres'
 } = process.env;
 

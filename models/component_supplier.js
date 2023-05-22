@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'supplier_id',
         as: 'suppliers',
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE' 
       });
 
       Component_Supplier.belongsTo(models.Components, {

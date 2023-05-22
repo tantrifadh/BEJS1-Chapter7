@@ -11,7 +11,7 @@ router.get('/products/:product_id', products.show);
 router.post('/products', products.store); 
 router.put('/products/:product_id', products.update); 
 router.delete('/products/:product_id', products.destroy); 
-
+ 
 router.get('/components', components.index);
 router.get('/components/:component_id', components.show); 
 router.post('/components', components.store); 
