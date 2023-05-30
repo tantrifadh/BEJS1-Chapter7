@@ -1,6 +1,6 @@
 const supertest = require("supertest");
-const app = require("../../../BEJS1-Chapter5/app.js");
-const truncate = require("../../../BEJS1-Chapter5/utils/truncate.js");
+const app = require("../app");
+const truncate = require("../utils/truncate");
 
 // reset database component
 const component = {

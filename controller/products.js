@@ -1,4 +1,4 @@
-const { Product, Product_Component, Component } = require("../db/models");
+const { Product, Product_Component, Component } = require("../models");
 
 module.exports = {
   index: async (req, res, next) => {

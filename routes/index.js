@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const product = require('../controllers/product');
-const component = require('../controllers/component');
-const supplier = require('../controllers/supplier');
+const product = require('../controller/products');
+const component = require('../controllers/components');
+const supplier = require('../controllers/suppliers');
 
 router.get('/', (req, res) => res.status(200).json({message: "welcome to blog api"}));
 router.get("/error", (req, res) => {
