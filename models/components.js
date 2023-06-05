@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Components.hasMany(models.component_suppliers, {
-        foreignKey: 'component_id',
-        as: 'component_suppliers',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }); 
+      models.Components.belongsToMany(models.Supplier, {
+        through: models.Component_Supplier,
+        foreignKey: "component_id",
+      });
 
       // relasi many-to-many --> Products
-      Components.hasMany(models.product_components, {
-        foreignKey: 'component_id',
-        as: 'product_components',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      models.Components.belongsToMany(models.Products, {
+        through: models.Product_Components,
+        foreignKey: "component_id",
       });
     }
   }
