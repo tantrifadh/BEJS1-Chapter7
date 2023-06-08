@@ -1,8 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const product = require('../controller/products');
-const component = require('../controllers/components');
-const supplier = require('../controllers/suppliers');
+const component = require('../controller/components');
+const supplier = require('../controller/suppliers');
+const user = require('../controller/user');
+const media = require('../controller/media');
+const strorage = require('../utils/strorage');
+const nodemailer = require('../utils/nodemailer');
+const multer = require('multer')();
+
+const middleware = require('../utils/middleware');
+
+router.get('/', (req, res) => res.status(200).json({message: "welcome to blog api"}));
+
+// oauth
+router.post('/auth/register', user.register);
+router.post('/auth/login', user.login);
+router.get('/auth/oauth', user.googleOauth2);
+router.get('/auth/whoami', middleware.auth, user.whoami);
+
+// media handling
+router.post('/storage/images', strorage.image.single('media'), media.strogeSingle);
+router.post('/storage/multi/images', strorage.image.array('media'), media.storageArray);
+router.post('/imagekit/upload', multer.single('media'), media.imagekitUpload);
+
+//mailer
+router.get('/test/mailer', async (req, res) => {
+  try {
+      // send email
+      nodemailer.sendMail('tantrifadhillah27@gmail.com', 'coba2', '<h1>Ini adalah data email</h1>');
+
+      return res.status(200).json({
+          status: true,
+          message: 'success',
+          data: null
+      });
+  } catch (error) {
+      throw error;
+  }
+});
 
 router.get('/', (req, res) => res.status(200).json({message: "welcome to blog api"}));
 router.get("/error", (req, res) => {
